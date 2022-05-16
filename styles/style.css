@@ -1,0 +1,37 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    width: 800px;
+    margin: 0 auto;
+}
+
+ul {
+    list-style-type: none;
+}
+
+input {
+    outline: none;
+}
+
+.main__title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.input__search {
+    border: 1px solid #b4acac;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.list__item {
+    display: flex;
+    justify-content: space-between;
+}
