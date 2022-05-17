@@ -51,6 +51,7 @@ filterArrTransfrom(pricesFilter3)
 const buttonsFilter = document.querySelectorAll('.button-filter')
 
 function buttonFilter(buttonFilter, filter, filterCount) {
+    let alertStop = 0
     buttonFilter.addEventListener('click', () => {
         let newArr = []
         courses.filter((item, idx) => {
@@ -61,6 +62,12 @@ function buttonFilter(buttonFilter, filter, filterCount) {
                 }
             }
         })
+        if (alertStop === 1) {
+            return
+        } else {
+            alert('Результат в console')
+            alertStop++
+        }
         console.log(newArr, `filter ${filterCount}`)
     })
 }
