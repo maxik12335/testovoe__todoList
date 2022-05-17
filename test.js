@@ -1,101 +1,70 @@
+//  пуcть null = 2000, если [200, null] и null = 0, если [null, 200]
+
 // Список курсов
 let courses = [
-    { name: "Courses in England", prices: 100 },
-    { name: "Courses in Germany", prices: 500 },
-    { name: "Courses in Italy", prices: 100 },
-    { name: "Courses in Russia", prices: 400 },
-    { name: "Courses in China", prices: 250 },
-    { name: "Courses in USA", prices: 200 },
-    { name: "Courses in Kazakhstan", prices: 324 },
-
+    { name: "Courses in England", prices: [0, 100] },
+    { name: "Courses in Germany", prices: [500, null] },
+    { name: "Courses in Italy", prices: [100, 200] },
+    { name: "Courses in Russia", prices: [null, 400] },
+    { name: "Courses in China", prices: [50, 250] },
+    { name: "Courses in USA", prices: [200, null] },
+    { name: "Courses in Kazakhstan", prices: [56, 324] },
+    { name: "Courses in France", prices: [null, null] },
 ];
 
 // Варианты цен (фильтры), которые ищет пользователь
-let requiredRange1 = [null, 200];
-let requiredRange2 = [100, 350];
-let requiredRange3 = [200, null];
+// rename: requiredRange = pricesFilter
+let pricesFilter1 = [null, 200];
+let pricesFilter2 = [100, 350];
+let pricesFilter3 = [200, null];
 
-// render
-const list = document.querySelector('.list'),
-    listItem = document.querySelectorAll('.list__item')
-
-function renderList(arr) {
-    arr.forEach(item => {
-        const listItem = document.createElement('li')
-        listItem.innerHTML = `<span>${item.name}</span><span>${item.prices} </span>`
-        listItem.classList.add('list__item')
-        list.append(listItem)
-    })
-}
-
-renderList(courses)
-
-// filter
-
-// filter__BUTTONS ----
-
-// first
-function rednerListFilterOne() {
-    const newArr = courses.filter(item => {
-        console.log(item.prices < 300)
-        return item.prices < 300
-    })
-
-    renderList(newArr)
-}
-
-const firstFilter = document.querySelector('.filter__one')
-firstFilter.addEventListener('click', () => {
-    list.innerHTML = ''
-    rednerListFilterOne()
-})
-
-//second
-
-function rednerListFiltertwo() {
-    const newArr = courses.filter(item => {
-        console.log(item.prices >= 300 && item.prices < 500)
-        return (item.prices >= 300 && item.prices < 500)
-    })
-
-    renderList(newArr)
-}
-
-const secondFilter = document.querySelector('.filter__two')
-secondFilter.addEventListener('click', () => {
-    list.innerHTML = ''
-    rednerListFiltertwo()
-})
-
-//third
-
-function rednerListFilterthree() {
-    const newArr = courses.filter(item => {
-        return item.prices >= 500
-    })
-
-    renderList(newArr)
-}
-
-const thirdFilter = document.querySelector('.filter__three')
-thirdFilter.addEventListener('click', () => {
-    list.innerHTML = ''
-    rednerListFilterthree()
-})
-
-// filter__INPUT
-
-const inputSearch = document.querySelector('.input__search')
-inputSearch.addEventListener('input', (e) => {
-    list.innerHTML = ''
-    console.log(e.target.value)
-    const newArr = courses.filter(item => {
-        return !item.name.indexOf(e.target.value)
-    })
-
-    renderList(newArr)
-    if (e.target.value === '') {
-        list.innerHTML = ''
-        renderList(courses)
+// courses add range
+courses.forEach(item => {
+    let start = item.prices[0] || 0
+    let end = item.prices[1] || 2000
+    item.prices = []
+    for (let i = start; i <= end; i++) {
+        item.prices.push(i)
     }
 })
+
+// filter add range
+function filterArrTransfrom(filter) {
+    let start = filter[0] || 0,
+        end = filter[1] || 2000,
+        filterArr = []
+
+    for (let i = start; i <= end; i++) {
+        filterArr.push(i)
+    }
+
+    filterArr.forEach((i, idx) => {
+        filter[idx] = i
+    })
+}
+
+filterArrTransfrom(pricesFilter1)
+filterArrTransfrom(pricesFilter2)
+filterArrTransfrom(pricesFilter3)
+
+// add listener on buttons
+const buttonsFilter = document.querySelectorAll('.button-filter')
+
+function buttonFilter(buttonFilter, filter, filterCount) {
+    buttonFilter.addEventListener('click', () => {
+        let newArr = []
+        courses.filter((item, idx) => {
+            for (let i = filter[0]; i <= filter[filter.length - 1]; i++) {
+                if (item.prices.indexOf(filter[i]) > -1) {
+                    newArr.push(item)
+                    return
+                }
+            }
+        })
+        console.log(newArr, `filter ${filterCount}`)
+    })
+}
+
+buttonFilter(buttonsFilter[0], pricesFilter1, 1)
+buttonFilter(buttonsFilter[1], pricesFilter2, 2)
+buttonFilter(buttonsFilter[2], pricesFilter3, 3)

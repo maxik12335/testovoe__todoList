@@ -17,21 +17,37 @@ input {
     outline: none;
 }
 
-.main__title {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.input__search {
-    border: 1px solid #b4acac;
-    display: block;
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-}
-
-.list__item {
+.filter {
     display: flex;
     justify-content: space-between;
+    margin-top: 20px;
+}
+
+.button-filter {
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    width: 30%;
+    background-color: #807c7c;
+    color: #e2e0e0;
+}
+
+
+@media(max-width: 850px) {
+    .container {
+        width: 100%;
+    }
+
+    .filter {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .button-filter {
+        width: 80%;
+    }
+
+    .button-filter:not(:last-child) {
+        margin-bottom: 20px;
+    }
 }
